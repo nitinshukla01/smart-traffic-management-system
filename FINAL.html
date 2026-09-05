@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Traffic Management System</title>
+ <style>
+
+    body {
+         font-family: Arial;
+         margin: 0;
+        background-color: #eeeeee;
+        text-align: center;
+       }
+
+     .page {
+            display: none;
+            padding: 30px;
+        }
+
+    .active {
+        display: block;
+        }
+
+     .box {
+     background-color: white;
+      width: 350px;
+        margin: 50px auto;
+       padding: 25px;
+        border-radius: 10px;
+     }
+
+     input, select {
+         padding: 10px;
+         margin: 8px;
+        width: 85%;
+        }
+
+    button {
+        padding: 10px 20px;
+        margin: 8px;
+        border: none;
+        background-color: green;
+         color: white;
+         cursor: pointer;
+         border-radius: 5px;
+     }
+
+    .menu button {
+          display: block;
+          width: 250px;
+         margin: 10px auto;
+     }
+
+  .signal {
+       background-color: black;
+       width: 90px;
+       margin: 25px auto;
+       padding: 10px;
+       border-radius: 15px;
+  }
+
+     .light {
+       width: 45px;
+       height: 45px;
+       border-radius: 50%;
+       margin: 10px auto;
+    }
+     .red {
+        background-color: red;
+    }
+
+      .yellow {
+            background-color: yellow;
+    }
+
+    .green {
+         background-color: green;
+        }
+
+   table {
+        margin: 30px auto;
+        border-collapse: collapse;
+        background-color: white;
+     }
+
+     th, td {
+         border: 1px solid black;
+         padding: 12px 25px;
+     }
+
+     th {
+          background-color: green;
+          color: white;
+     }
+
+  .total {
+          font-size: 20px;
+          font-weight: bold;
+     }
+
+     .emergency {
+         background-color: #ffe0e0;
+      }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- LOGIN PAGE -->
+
+<div id="login" class="page active">
+
+<div class="box">
+
+      <h1>Smart Traffic</h1>
+
+     <h3>Management System</h3>
+
+     <input type="text" id="username" placeholder="Username">
+     <input type="password" id="password" placeholder="Password">
+     <br>
+     <button onclick="login()">Login</button>
+     <p id="loginMessage"></p>
+
+ </div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="page">
+
+    <h1>Smart Traffic Dashboard</h1>
+
+<div class="box menu">
+
+    <button onclick="showPage('traffic')">
+      Traffic Input
+    </button>
+
+  <button onclick="showPage('signal')">
+         Signal Control
+      </button>
+
+  <button onclick="showPage('emergency')">
+        Emergency Mode
+    </button>
+
+     <button onclick="showPage('report')">
+        Daily Traffic Report
+    </button>
+
+     <button onclick="showPage('login')">
+         Logout
+     </button>
+
+</div>
+
+</div>
+
+
+<!-- TRAFFIC INPUT -->
+
+<div id="traffic" class="page">
+
+ <div class="box">
+
+     <h1>Traffic Input</h1>
+     <p>North Road</p>
+     <input type="number" id="north" placeholder="Vehicles">
+     <p>South Road</p>
+     <input type="number" id="south" placeholder="Vehicles">
+     <p>East Road</p>
+     <input type="number" id="east" placeholder="Vehicles">
+     <p>West Road</p>
+     <input type="number" id="west" placeholder="Vehicles">
+     <br>
+     <button onclick="calculateTraffic()">
+        Analyze Traffic
+     </button>
+     <p id="trafficResult"></p>
+     <button onclick="showPage('dashboard')">
+         Back
+     </button>
+
+ </div>
+
+</div>
+
+<!-- SIGNAL CONTROL -->
+
+<div id="signal" class="page">
+
+ <h1>Traffic Signal Control</h1>
+
+<div class="signal">
+
+    <div class="light red"></div>
+    <div class="light yellow"></div>
+    <div class="light green"></div>
+
+ </div>
+
+ <h2 id="signalRoad">
+      Current Priority: North Road
+ </h2>
+
+ <p id="signalLevel">
+     Traffic Level: Normal
+ </p>
+
+    <button onclick="showPage('dashboard')">
+        Back
+    </button>
+</div>
+
+<!-- EMERGENCY MODE -->
+
+<div id="emergency" class="page">
+
+ <div class="box emergency">
+
+     <h1>Emergency Mode</h1>
+
+    <h3>Select Emergency Vehicle</h3>
+
+ <select id="emergencyVehicle">
+
+     <option value="">Select Vehicle</option>
+     <option value="Ambulance">
+         Ambulance
+     </option>
+     <option value="Fire Brigade">
+         Fire Brigade
+     </option>
+     <option value="Police">
+         Police
+     </option>
+ </select>
+
+
+   <h3>Select Direction</h3>
+
+<select id="emergencyDirection">
+
+    <option value="">Select Direction</option>    
+    <option value="North">
+        North
+    </option>    
+    <option value="South">
+        South
+    </option>    
+    <option value="East">
+        East
+    </option>    
+    <option value="West">
+        West
+    </option>
+
+ </select>
+
+        <br>
+
+     <button onclick="emergencySignal()">
+         Give Priority
+     </button>
+     <h3 id="emergencyMessage"></h3>
+     <button onclick="showPage('dashboard')">
+         Back
+     </button>
+
+    </div>
+
+</div>
+
+
+<!-- DAILY REPORT -->
+
+<div id="report" class="page">
+
+ <h1>Daily Traffic Report</h1>
+
+ <table>
+     <tr>
+         <th>Direction</th>
+         <th>Vehicles</th>
+     </tr>
+     <tr>
+         <td>North</td>
+         <td id="northReport">0</td>
+     </tr>
+     <tr>
+         <td>South</td>
+         <td id="southReport">0</td>
+     </tr>
+     <tr>
+         <td>East</td>
+         <td id="eastReport">0</td>
+     </tr>
+     <tr>
+         <td>West</td>
+         <td id="westReport">0</td>
+     </tr>
+    </table>
+
+
+<p class="total">
+    Total Vehicles:
+    <span id="totalVehicles">0</span>
+</p>
+
+ <h2 id="highestTraffic"> Highest Traffic: - </h2>
+
+<h3 id="emergencyReport"> Emergency: None</h3>
+
+ <button onclick="showPage('dashboard')">
+     Back
+ </button>
+
+</div>
+
+
+<script>
+
+
+/* PAGE CHANGE */
+
+function showPage(pageName) {
+
+ var pages = document.getElementsByClassName("page");
+ for (var i = 0; i < pages.length; i++) {
+     pages[i].classList.remove("active");
+    }
+    document.getElementById(pageName).classList.add("active");
+
+}
+
+/* LOGIN */
+
+function login() {
+
+var user = document.getElementById("username").value;
+var pass = document.getElementById("password").value;
+if (user != "" && pass != "") {
+    showPage("dashboard");
+    }
+
+    else {
+
+  document.getElementById("loginMessage").innerHTML = "Please enter username and password";
+       
+    }
+}
+
+/* TRAFFIC CALCULATION */
+
+function calculateTraffic() {
+
+var north =
+Number(document.getElementById("north").value);
+var south =
+Number(document.getElementById("south").value);
+var east =
+Number(document.getElementById("east").value);
+var west =
+Number(document.getElementById("west").value);
+    var highest = north;
+
+    var road = "North";
+
+
+ if (south > highest) {
+     highest = south;
+     road = "South";
+ }
+
+if (east > highest) {
+    highest = east;
+    road = "East";
+}
+
+ if (west > highest) {
+     highest = west;
+     road = "West";
+ }
+
+
+ var total =
+ north + south + east + west;
+ document.getElementById("trafficResult").innerHTML ="Highest Traffic: " + road + " Road (" + highest + " vehicles)";
+ document.getElementById("signalRoad").innerHTML ="Current Priority: " + road + " Road";
+ document.getElementById("signalLevel").innerHTML ="Traffic Level: Heavy";
+ document.getElementById("northReport").innerHTML = north;
+ document.getElementById("southReport").innerHTML = south;
+ document.getElementById("eastReport").innerHTML = east;
+ document.getElementById("westReport").innerHTML = west;
+ document.getElementById("totalVehicles").innerHTML = total;
+ document.getElementById("highestTraffic").innerHTML =  "Highest Traffic: " + road;
+}
+
+/* EMERGENCY MODE */
+
+function emergencySignal() {
+
+ var vehicle =
+ document.getElementById("emergencyVehicle").value;
+ var direction =
+ document.getElementById("emergencyDirection").value;
+    if (vehicle == "" || direction == "") {
+    
+      document.getElementById("emergencyMessage").innerHTML =
+      "Please select vehicle and direction"    
+      return;
+    }
+
+    document.getElementById("emergencyMessage").innerHTML =
+    vehicle + " detected on " +
+    direction + " Road. Green Signal Priority Given.";
+
+    document.getElementById("emergencyReport").innerHTML =
+    "Emergency: " + vehicle +
+    " - " + direction + " Road";
+
+    document.getElementById("signalRoad").innerHTML =
+    "Emergency Priority: " + direction + " Road";
+}
+
+
+</script>
+
+
+</body>
+</html>
